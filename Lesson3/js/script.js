@@ -1,3 +1,4 @@
+'use strict';
 // 1) Через if:
 
 let languages = ['ru', 'en'],
