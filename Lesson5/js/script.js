@@ -14,14 +14,14 @@ outputArray(7);
 const outputPrimeNumbers = function(n) {
     let flag;
     for (let j = 2; j <= n; j++) {
-        flag = 1;
+        flag = true;
         for (let i = 2; i <= Math.trunc(Math.sqrt(j)); i++) {
             if (j % i == 0) {
-                flag = 0;
+                flag = false;
                 break;
             }
         }
-        if (flag == 1) console.log('Число ' + j + ' является простым и его делителями являются: 1 и ' + j);
+        if (flag) console.log('Число ' + j + ' является простым и его делителями являются: 1 и ' + j);
     }
 }
 
