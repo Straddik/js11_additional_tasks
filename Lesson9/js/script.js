@@ -3,18 +3,18 @@ let div1 = document.createElement('div');
 document.body.append(div1);
 let div2 = document.createElement('div');
 document.body.append(div2);
+let options = {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric'
+};
 
 setInterval(() => {
     let day = new Date();
-    let options = {
-        weekday: 'long',
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric'
-    };
 
     let string = 'Сегодня ' + day.toLocaleString("ru", options).split(", ").map((val, index, arr) => {
         if (!index) return val[0].toUpperCase() + val.substr(1);
