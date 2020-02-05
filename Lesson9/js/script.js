@@ -8,15 +8,10 @@ let options = {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric',
-    second: 'numeric'
 };
 
-setInterval(() => {
-    let day = new Date();
-
-    let string = 'Сегодня ' + day.toLocaleString("ru", options).split(", ").map((val, index, arr) => {
+const outputDateFormatA = function(d) {
+    d = 'Сегодня ' + (d.toLocaleString("ru", options) + `, ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`).split(", ").map((val, index, arr) => {
         if (!index) return val[0].toUpperCase() + val.substr(1);
         if (index === 1) return val.substring(0, val.length - 2) + ' года';
         if (index === 2) {
@@ -48,11 +43,17 @@ setInterval(() => {
             }).join(' ');
         }
     }).join(', ');
+    return d;
+}
 
-    div1.innerHTML = string;
+const outputDateFormatB = function(d) {
+    return d.replace(/\b(\d)\b/g, '0' + '$1');
+}
 
-    string = `${day.getDate()}.${day.getMonth()+1}.${day.getFullYear()} - ${day.getHours()}:${day.getMinutes()}:${day.getSeconds()}`;
-    string = string.replace(/\b(\d)\b/g, '0' + '$1');
-    div2.innerHTML = string;
+setInterval(() => {
+    let day = new Date();
+    div1.innerHTML = outputDateFormatA(day);
+    let string = `${day.getDate()}.${day.getMonth()+1}.${day.getFullYear()} - ${day.getHours()}:${day.getMinutes()}:${day.getSeconds()}`;
+    div2.innerHTML = outputDateFormatB(string);
 
 }, 1000);
