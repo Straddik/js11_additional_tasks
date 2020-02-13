@@ -7,39 +7,33 @@ const DomElement = function(selector, height, width, bg, fontSize, position) {
     this.fontSize = fontSize + "px";
     this.position = position;
     this.element = {};
+    this.body = {};
 }
 
 DomElement.prototype.set = function(text) {
     if (this.selector[0] === '.') {
-        let div = document.createElement("div");
-        div.className = this.selector.slice(1);
-        div.innerHTML = text;
-        div.style.cssText = `height: ${this.height};
-        width: ${this.width};
-        background-color: ${this.bg};
-        font-size: ${this.fontSize};
-        position: ${this.position};`;
-        this.element = div;
+        this.element = document.createElement("div");
+
         // document.body.append(div);
     } else if (this.selector[0] === '#') {
-        let p = document.createElement("p");
-        p.id = this.selector.slice(1);
-        p.innerHTML = text;
-        p.style.cssText = `height: ${this.height};
+        this.element = document.createElement("p");
+        // document.body.append(p);
+    }
+    this.element.className = this.selector.slice(1);
+    this.element.innerHTML = text;
+    this.element.style.cssText = `height: ${this.height};
         width: ${this.width};
         background-color: ${this.bg};
         font-size: ${this.fontSize};
         position: ${this.position};`;
-        this.element = div;
-        // document.body.append(p);
-    }
+    console.dir(this.element);
 };
 DomElement.prototype.append = function() {
     document.body.append(this.element);
 };
 DomElement.prototype.contentLoad = function() {
     document.addEventListener("DOMContentLoaded", () => {
-        square.append();
+        this.append();
     });
 }
 DomElement.prototype.listenKey = function() {
@@ -50,36 +44,39 @@ DomElement.prototype.listenKey = function() {
             x = +this.element.style.transform.match(/\d+/g)[0];
             y = +this.element.style.transform.match(/\d+/g)[1];
         }
+        console.log(x, y);
+
         if (e.key === 'ArrowDown') {
             y += 10;
-            this.element.style.transform = `translate(${x}px, ${y}px)`;
         }
         if (e.key === 'ArrowUp') {
             y -= 10;
-            this.element.style.transform = `translate(${x}px, ${y}px)`;
         }
         if (e.key === 'ArrowLeft') {
             x -= 10;
-            this.element.style.transform = `translate(${x}px, ${y}px)`;
         }
         if (e.key === 'ArrowRight') {
             x += 10;
-            this.element.style.transform = `translate(${x}px, ${y}px)`;
         }
+        if (x >= (this.body.offsetWidth - 10)) {
+            x -= 10;
+        };
+        if (x <= -10) {
+            x += 10;
+        };
+        if (y <= -10) {
+            y += 10;
+        };
+        this.element.style.transform = `translate(${x}px, ${y}px)`;
     })
 };
+DomElement.prototype.callBody = function() {
+    this.body = document.querySelector("body");
+    console.dir(this.body);
+}
 
 const square = new DomElement(".square", 100, 100, 'green', 0, 'absolute');
 square.set();
 square.contentLoad();
+square.callBody();
 square.listenKey();
-
-
-
-// 1) Используя class DomElement из основного задания №1, создать квадрат 100 на 100 пикселей. Ему необходимо задать фон(background) любого цвета и свойство position: absolute.
-// 2) Поместить его на страницу только после выполнения события DOMContentLoaded.
-// Внутри тега должно быть только подключение скрипта.
-
-// 3) Написать обработчик события для keydown, который будет принимать callback-функцию. Данная функция будет отлавливать нажатие на стрелки клавиатуры. В зависимости от нажатой кнопки(Вверх - стрелка вверх, Влево - стрелка влево, Вправо - стрелка вправо, Вниз - стрелка вниз) наш квадрат будет перемещаться на 10 пикселей.
-
-// 4) Добавить папку с уроком на свой GitHub
