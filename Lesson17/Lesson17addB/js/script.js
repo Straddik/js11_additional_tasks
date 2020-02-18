@@ -58,6 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 buttonStartAndStop.innerHTML = 'Нажми, чтобы остановить мячик';
             }
         } else {
+            buttonStartAndStop.innerHTML = 'Нажми, чтобы запустить мячик';
             cancelAnimationFrame(requestId);
             flag = false;
             stepY = 1;
