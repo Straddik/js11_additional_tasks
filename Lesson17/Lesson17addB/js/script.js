@@ -51,9 +51,11 @@ document.addEventListener('DOMContentLoaded', () => {
             if (flag) {
                 cancelAnimationFrame(requestId);
                 flag = !flag;
+                buttonStartAndStop.innerHTML = 'Нажми, чтобы запустить мячик';
             } else {
                 animate();
                 flag = !flag;
+                buttonStartAndStop.innerHTML = 'Нажми, чтобы остановить мячик';
             }
         } else {
             cancelAnimationFrame(requestId);
